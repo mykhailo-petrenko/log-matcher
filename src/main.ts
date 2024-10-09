@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import path from 'path';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -14,6 +14,11 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
+  });
+
+  ipcMain.handle('load-prefs', (event) => {
+    console.log('I load-prefs.', event);
+    return {'ola': 'bola'};
   });
 
   // and load the index.html of the app.
